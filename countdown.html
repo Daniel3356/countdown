@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin: 50px;
+      background-color: #f8f8f8;
+    }
+
+    #countdown {
+      font-size: 2.5em;
+      padding: 20px;
+      border: 3px solid #e74c3c;
+      border-radius: 12px;
+      background-color: #ecf0f1;
+      display: inline-block;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      color: #c0392b;
+      transition: all 0.3s ease-in-out;
+    }
+
+    #countdown:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+    }
+
+    #countdown::before {
+      content: "\1F4C5"; /* Unicode clock symbol */
+      font-size: 1.8em;
+      margin-right: 12px;
+      color: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+
+<div id="countdown"></div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+  // Set the release date/time in Unix timestamp format
+  let release_unix = 1709599118; // Replace with your desired release date/time in Unix timestamp
+
+  const updateCountdown = () => {
+    let currentTime = Math.floor(Date.now() / 1000); // Current time in Unix timestamp format
+    let timeDifference = release_unix - currentTime;
+
+    if (timeDifference <= 0) {
+      // Release time has passed
+      $('#countdown').text('Release time has passed!');
+    } else {
+      let days = Math.floor(timeDifference / (60 * 60 * 24));
+      let hours = Math.floor((timeDifference % (60 * 60 * 24)) / (60 * 60));
+      let minutes = Math.floor((timeDifference % (60 * 60)) / 60);
+      let seconds = timeDifference % 60;
+
+      // Format the countdown display
+      let countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      $('#countdown').text(countdownText);
+    }
+  };
+
+  // Update the countdown every second
+  setInterval(updateCountdown, 1000);
+
+  // Initial update
+  updateCountdown();
+</script>
+
+</body>
+</html>
